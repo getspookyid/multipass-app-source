@@ -2,13 +2,15 @@
 // We define it here to allow the Dart code to compile and mock the behavior
 
 class RustBridge {
-  static Future<String> bbsDeriveSkFromSeed(String seedHex, String contextHex) async {
+  static Future<String> bbsDeriveSkFromSeed(
+      String seedHex, String contextHex) async {
     // In a real app with FFI, this calls the native function.
     // logical mock:
     return "mock_sk_derived_from_${seedHex.substring(0, 4)}";
   }
 
-  static Future<String> bbsGenerateLinkageTag(String skHex, String siteId) async {
+  static Future<String> bbsGenerateLinkageTag(
+      String skHex, String siteId) async {
     return "mock_linkage_tag_for_$siteId";
   }
 }

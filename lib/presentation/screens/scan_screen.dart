@@ -12,8 +12,6 @@ class ScanScreen extends StatefulWidget {
   State<ScanScreen> createState() => _ScanScreenState();
 }
 
-
-
 class _ScanScreenState extends State<ScanScreen> {
   String _status = "TAP ANCHOR";
   String _subStatus = "Hold card to back of phone";
@@ -28,21 +26,21 @@ class _ScanScreenState extends State<ScanScreen> {
 
     try {
       final repo = context.read<CardRepository>();
-      
+
       // 1. Connect (Poll)
       await repo.connect();
-      
+
       if (mounted) setState(() => _status = "SECURING CHANNEL...");
-      
+
       // 2. Authenticate (SCP03 handshake + Select)
       final success = await repo.authenticate();
       if (!success) throw Exception("Auth Failed");
-      
+
       if (mounted) setState(() => _status = "DERIVING KEYS...");
-      
+
       // 3. Verify Identity (Get Public Address)
       await repo.getPublicAddress(); // Just verifying we can derive it
-      
+
       // Success!
       if (mounted) {
         Navigator.pushReplacementNamed(context, '/wallet');
@@ -56,9 +54,9 @@ class _ScanScreenState extends State<ScanScreen> {
         });
       }
     } finally {
-      // Don't disconnect here in a real app if we want to keep session, 
+      // Don't disconnect here in a real app if we want to keep session,
       // but for this flow we might want to release NFC.
-      // context.read<CardRepository>().disconnect(); 
+      // context.read<CardRepository>().disconnect();
     }
   }
 
@@ -85,9 +83,14 @@ class _ScanScreenState extends State<ScanScreen> {
                     color: _isScanning ? AppTheme.electricBlue : Colors.white24,
                     width: 2,
                   ),
-                  boxShadow: _isScanning ? [
-                     BoxShadow(color: AppTheme.electricBlue.withOpacity(0.3), blurRadius: 30, spreadRadius: 5)
-                  ] : [],
+                  boxShadow: _isScanning
+                      ? [
+                          BoxShadow(
+                              color: AppTheme.electricBlue.withOpacity(0.3),
+                              blurRadius: 30,
+                              spreadRadius: 5)
+                        ]
+                      : [],
                 ),
                 child: Icon(
                   Icons.nfc,
@@ -99,7 +102,10 @@ class _ScanScreenState extends State<ScanScreen> {
             const SizedBox(height: 40),
             Text(
               _status,
-              style: GoogleFonts.outfit(fontSize: 24, fontWeight: FontWeight.bold, color: AppTheme.hotPink),
+              style: GoogleFonts.outfit(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.hotPink),
             ),
             const SizedBox(height: 8),
             Text(

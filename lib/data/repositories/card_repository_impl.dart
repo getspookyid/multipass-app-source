@@ -34,15 +34,17 @@ class CardRepositoryImpl implements CardRepository {
   @override
   Future<String> getPublicAddress() async {
     // 1. Get Seed from Card (Mock)
-    const seedHex = "000102030405060708090A0B0C0D0E0F"; 
-    
+    const seedHex = "000102030405060708090A0B0C0D0E0F";
+
     // 2. Derive SK via Rust Bridge
-    final sk = await RustBridge.bbsDeriveSkFromSeed(seedHex, "SpookyID-Context");
-    
+    final sk =
+        await RustBridge.bbsDeriveSkFromSeed(seedHex, "SpookyID-Context");
+
     // 3. Generate Public ID (Linkage Tag for 'global')
-    final tag = await RustBridge.bbsGenerateLinkageTag(sk, "global.spookyid.io");
+    final tag =
+        await RustBridge.bbsGenerateLinkageTag(sk, "global.spookyid.io");
     debugPrint("🟢 HANDSHAKE COMPLETE. Tag: $tag");
-    
+
     return tag;
   }
 }

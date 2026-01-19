@@ -6,7 +6,8 @@ class AttestationDatasource {
   final StrongboxManager _strongboxManager;
   final String _baseUrl; // e.g. "https://api.getspooky.io"
 
-  AttestationDatasource(this._strongboxManager, {String baseUrl = "http://localhost:7777"}) 
+  AttestationDatasource(this._strongboxManager,
+      {String baseUrl = "http://localhost:7777"})
       : _baseUrl = baseUrl;
 
   /// Performs the Hardware Attestation Handshake

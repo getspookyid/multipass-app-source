@@ -23,7 +23,8 @@ class OnboardingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
-                const Icon(Icons.shield_outlined, size: 80, color: AppTheme.electricBlue),
+                const Icon(Icons.shield_outlined,
+                    size: 80, color: AppTheme.electricBlue),
                 const SizedBox(height: 24),
                 Text(
                   "YOUR IDENTITY.\nYOUR HARDWARE.\nYOUR RULES.",
@@ -53,11 +54,13 @@ class OnboardingScreen extends StatelessWidget {
                       backgroundColor: AppTheme.electricBlue,
                       foregroundColor: Colors.black,
                       padding: const EdgeInsets.symmetric(vertical: 20),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
                     ),
                     child: Text(
                       "GET STARTED",
-                      style: GoogleFonts.outfit(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: GoogleFonts.outfit(
+                          fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),

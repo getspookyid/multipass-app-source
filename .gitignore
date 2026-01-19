@@ -42,7 +42,21 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-android/build/
+# Robust Android ignores
+**/android/app/build/
+**/android/.gradle/
+android/app/build/
+android/.gradle/
+**/build/
+**/target/
+build/
+target/
+
+# Tooling and Configs
+.claude/
+tools/
+rust_builder/
+
 android/.gradle/
 
 # CRITICAL: Exclude entire Flutter SDK

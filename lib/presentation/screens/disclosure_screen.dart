@@ -5,8 +5,9 @@ import 'package:provider/provider.dart';
 class DisclosureScreen extends StatefulWidget {
   final String verifierName;
   final String nonce;
-  
-  const DisclosureScreen({Key? key, required this.verifierName, required this.nonce}) : super(key: key);
+
+  const DisclosureScreen(
+      {super.key, required this.verifierName, required this.nonce});
 
   @override
   _DisclosureScreenState createState() => _DisclosureScreenState();
@@ -15,14 +16,20 @@ class DisclosureScreen extends StatefulWidget {
 class _DisclosureScreenState extends State<DisclosureScreen> {
   // Mock attributes matching Repository
   final List<String> _labels = [
-    "Credential ID", "DID", "Family Name", "Given Name", 
-    "Birth Date", "Issue Date", "Expiry Date", "Privileges"
+    "Credential ID",
+    "DID",
+    "Family Name",
+    "Given Name",
+    "Birth Date",
+    "Issue Date",
+    "Expiry Date",
+    "Privileges"
   ];
-  
+
   // Track selected indices
   final Set<int> _selectedIndices = {};
   String _statusMessage = "";
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +66,8 @@ class _DisclosureScreenState extends State<DisclosureScreen> {
           if (_statusMessage.isNotEmpty)
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(_statusMessage, style: const TextStyle(color: Colors.green)),
+              child: Text(_statusMessage,
+                  style: const TextStyle(color: Colors.green)),
             ),
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -79,7 +87,7 @@ class _DisclosureScreenState extends State<DisclosureScreen> {
 
   Future<void> _generateProof() async {
     setState(() => _statusMessage = "Generating Zero-Knowledge Proof...");
-    
+
     try {
       final repo = Provider.of<CredentialRepository>(context, listen: false);
       final proof = await repo.generatePresentation(
@@ -87,11 +95,11 @@ class _DisclosureScreenState extends State<DisclosureScreen> {
         nonce: widget.nonce,
         siteId: "site_abc", // Derived from Verifier info in real app
       );
-      
-      setState(() => _statusMessage = "Success! Proof Size: ${proof.length} bytes");
-      
+
+      setState(
+          () => _statusMessage = "Success! Proof Size: ${proof.length} bytes");
+
       // In a real flow, we would now POST this proof to the Verifier or send it via BLE
-      
     } catch (e) {
       setState(() => _statusMessage = "Error: $e");
     }

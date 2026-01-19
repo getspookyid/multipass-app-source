@@ -1,4 +1,3 @@
-
 /// Verifiable Credential Model
 /// Represents a BBS+ signed credential (admin, identity, etc.)
 class Credential {

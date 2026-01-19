@@ -16,7 +16,7 @@ class CryptoBridge {
   }) async {
     // Note: User-provided Rust implementation dropped nonce/siteId/freshness support
     // We strictly follow the 'generateBbsProof' signature.
-    return await generateBbsProof(
+    return generateBbsProof(
       dpkBytes: publicKey,
       sigBytes: signature,
       messages: messages.map((m) => utf8.decode(m)).toList(),
@@ -33,7 +33,7 @@ class CryptoBridge {
     required List<Uint8List> revealedMessages,
     required Uint8List nonce,
   }) async {
-    return await verifyProofApi(
+    return verifyProofApi(
       publicKey: publicKey,
       proof: proof,
       totalMessageCount: BigInt.from(totalMessageCount),
@@ -51,7 +51,7 @@ class CryptoBridge {
     required int threshold,
     required int total,
   }) async {
-    return await splitSecretApi(
+    return splitSecretApi(
       secret: secret,
       threshold: threshold,
       total: total,
@@ -62,7 +62,7 @@ class CryptoBridge {
   Future<Uint8List> reconstructSecret({
     required List<Uint8List> shares,
   }) async {
-    return await reconstructSecretApi(shares: shares);
+    return reconstructSecretApi(shares: shares);
   }
 
   /// Encodes data into mDoc CBOR format (Native)
@@ -73,7 +73,7 @@ class CryptoBridge {
     final docTypeBytes = Uint8List.fromList(utf8.encode(docType));
     final dataJsonBytes = Uint8List.fromList(utf8.encode(dataJson));
 
-    return await encodeMdocBytes(
+    return encodeMdocBytes(
       docType: docTypeBytes,
       dataJson: dataJsonBytes,
     );
@@ -81,7 +81,7 @@ class CryptoBridge {
 
   /// Signs the MSO using the issuer's private key (Native)
   Future<Uint8List> signMso(List<int> msoBytes, List<int> privateKey) async {
-    return await signMsoBytes(
+    return signMsoBytes(
       msoBytes: Uint8List.fromList(msoBytes),
       issuerPrivateKey: Uint8List.fromList(privateKey),
     );

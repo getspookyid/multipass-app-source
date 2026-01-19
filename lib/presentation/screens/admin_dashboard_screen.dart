@@ -18,7 +18,7 @@ class AdminDashboardScreen extends StatefulWidget {
 
 class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   final _service = AdminDashboardService();
-  
+
   DashboardMetrics? _metrics;
   List<AuthEvent>? _events;
   bool _isLoading = true;
@@ -30,7 +30,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     super.initState();
     _loadData();
     // Auto-refresh every 10 seconds
-    _refreshTimer = Timer.periodic(const Duration(seconds: 10), (_) => _loadData());
+    _refreshTimer =
+        Timer.periodic(const Duration(seconds: 10), (_) => _loadData());
   }
 
   @override
@@ -43,7 +44,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     try {
       final metrics = await _service.getMetrics(widget.accessToken);
       final events = await _service.getRecentAuth(widget.accessToken);
-      
+
       if (mounted) {
         setState(() {
           _metrics = metrics;
@@ -58,11 +59,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           _error = e.toString();
           _isLoading = false;
         });
-        
+
         // If token expired, navigate back
         if (e.toString().contains('expired') || e.toString().contains('401')) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Session expired. Please login again.')),
+            const SnackBar(
+                content: Text('Session expired. Please login again.')),
           );
           Navigator.pop(context);
         }
@@ -82,7 +84,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   String _formatTimestamp(DateTime dt) {
     final now = DateTime.now();
     final diff = now.difference(dt);
-    
+
     if (diff.inMinutes < 1) return 'Just now';
     if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
     if (diff.inHours < 24) return '${diff.inHours}h ago';
@@ -102,10 +104,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: _isLoading ? null : () {
-              setState(() => _isLoading = true);
-              _loadData();
-            },
+            onPressed: _isLoading
+                ? null
+                : () {
+                    setState(() => _isLoading = true);
+                    _loadData();
+                  },
           ),
         ],
       ),
@@ -166,7 +170,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppTheme.electricBlue,
                 foregroundColor: Colors.black,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               ),
             ),
           ],
@@ -187,41 +192,50 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           title: 'Authentication',
           color: AppTheme.electricBlue,
           children: [
-            _MetricRow('Total Verifications', '${_metrics!.authentication.totalVerifications}'),
-            _MetricRow('Last 24h', '${_metrics!.authentication.recentVerifications24h}'),
-            _MetricRow('Failed (24h)', '${_metrics!.authentication.failedAttempts24h}',
-                valueColor: _metrics!.authentication.failedAttempts24h > 0 ? AppTheme.hotPink : Colors.white70),
+            _MetricRow('Total Verifications',
+                '${_metrics!.authentication.totalVerifications}'),
+            _MetricRow('Last 24h',
+                '${_metrics!.authentication.recentVerifications24h}'),
+            _MetricRow(
+                'Failed (24h)', '${_metrics!.authentication.failedAttempts24h}',
+                valueColor: _metrics!.authentication.failedAttempts24h > 0
+                    ? AppTheme.hotPink
+                    : Colors.white70),
           ],
         ),
-        
+
         const SizedBox(height: 16),
-        
+
         // Device Metrics
         _MetricCard(
           icon: Icons.devices,
           title: 'Devices',
           color: const Color(0xFF00D9AA),
           children: [
-            _MetricRow('Total Registered', '${_metrics!.devices.totalRegistered}'),
-            _MetricRow('Active Sessions', '${_metrics!.devices.activeSessions}'),
+            _MetricRow(
+                'Total Registered', '${_metrics!.devices.totalRegistered}'),
+            _MetricRow(
+                'Active Sessions', '${_metrics!.devices.activeSessions}'),
           ],
         ),
-        
+
         const SizedBox(height: 16),
-        
+
         // Security Metrics
         _MetricCard(
           icon: Icons.shield,
           title: 'Security',
           color: AppTheme.hotPink,
           children: [
-            _MetricRow('Root Anchor', _metrics!.security.rootAnchor, monospace: true),
-            _MetricRow('Revoked Tags', '${_metrics!.security.revokedTagsCount}'),
+            _MetricRow('Root Anchor', _metrics!.security.rootAnchor,
+                monospace: true),
+            _MetricRow(
+                'Revoked Tags', '${_metrics!.security.revokedTagsCount}'),
           ],
         ),
-        
+
         const SizedBox(height: 16),
-        
+
         // System Metrics
         _MetricCard(
           icon: Icons.dns,
@@ -232,9 +246,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             _MetricRow('Version', _metrics!.system.version),
           ],
         ),
-        
+
         const SizedBox(height: 24),
-        
+
         // Recent Events
         Text(
           'Recent Authentication Events',
@@ -244,9 +258,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             color: Colors.white,
           ),
         ),
-        
+
         const SizedBox(height: 12),
-        
+
         if (_events == null || _events!.isEmpty)
           Container(
             padding: const EdgeInsets.all(24),
@@ -384,7 +398,7 @@ class _EventTile extends StatelessWidget {
   String _formatTimestamp(DateTime dt) {
     final now = DateTime.now();
     final diff = now.difference(dt);
-    
+
     if (diff.inMinutes < 1) return 'Just now';
     if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
     if (diff.inHours < 24) return '${diff.inHours}h ago';
@@ -394,7 +408,7 @@ class _EventTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isSuccess = event.status == 'success';
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(16),

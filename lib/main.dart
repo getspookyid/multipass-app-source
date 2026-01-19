@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'presentation/screens/recovery_import_screen.dart';
 import 'package:provider/provider.dart';
-import '../../core/theme.dart';
-import '../../presentation/screens/onboarding_screen.dart';
-import '../../presentation/screens/scan_screen.dart';
-import '../../presentation/screens/wallet_screen.dart';
-import '../../presentation/screens/import_screen.dart';
-import '../../presentation/screens/admin_login_screen.dart';
-import '../../presentation/screens/recovery_split_screen.dart';
-import '../../data/datasources/nfc_datasource.dart';
-import '../../data/repositories/card_repository_impl.dart';
-import '../../domain/repositories/card_repository.dart';
-import '../../core/diagnostic_manager.dart';
+import 'core/theme.dart';
+import 'presentation/screens/onboarding_screen.dart';
+import 'presentation/screens/scan_screen.dart';
+import 'presentation/screens/wallet_screen.dart';
+import 'presentation/screens/import_screen.dart';
+import 'presentation/screens/admin_login_screen.dart';
+import 'presentation/screens/recovery_split_screen.dart';
+import 'data/datasources/nfc_datasource.dart';
+import 'data/repositories/card_repository_impl.dart';
+import 'domain/repositories/card_repository.dart';
+import 'core/diagnostic_manager.dart';
 
-import 'src/rust/api.dart';
+import 'src/rust/api.dart'; // Ensure this matches your FRB generation
 import 'src/rust/frb_generated.dart';
 import 'core/strongbox_manager.dart';
 
-import '../../core/security_guard.dart';
-import '../../presentation/screens/security_failure_screen.dart';
+import 'core/security_guard.dart';
+import 'presentation/screens/security_failure_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +35,9 @@ void main() async {
     // Request 32 bytes of secure entropy from Android KeyStore/SecureRandom
     final strongboxSeed = await strongbox.getEntropy(32);
     // Inject into Rust Bridge (Fail-Closed if this fails)
-    await initBridge(strongboxSeed: strongboxSeed.toList());
+    // Note: initBridge is likely in api.dart or generated top-level
+    await RustLib.instance.api
+        .crateApiInitBridge(strongboxSeed: strongboxSeed.toList());
 
     runApp(const MultipassApp());
   } catch (e) {
@@ -57,7 +59,7 @@ class MultipassApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'SpookyID Multipass',
-        theme: AppTheme.darkTheme,
+        theme: AppTheme.darkTheme, // Ensure AppTheme is defined
         initialRoute: '/',
         routes: {
           '/': (context) => const OnboardingScreen(),

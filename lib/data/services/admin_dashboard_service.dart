@@ -167,5 +167,6 @@ class AuthEvent {
     );
   }
 
-  DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+  DateTime get dateTime =>
+      DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
 }

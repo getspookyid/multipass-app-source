@@ -138,14 +138,15 @@ class StrongboxManager {
     try {
       final Uint8List? result =
           await _channel.invokeMethod('getEntropy', {'size': size});
-      if (result == null)
+      if (result == null) {
         throw PlatformException(
             code: "NULL_ENTROPY", message: "Received null entropy");
+      }
       return result;
     } on PlatformException catch (e) {
       debugPrint("Failed to get entropy: '${e.message}'.");
       // Critical failure - cannot proceed without entropy
-      throw e;
+      rethrow;
     }
   }
 }

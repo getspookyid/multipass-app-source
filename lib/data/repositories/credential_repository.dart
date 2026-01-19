@@ -4,7 +4,7 @@ import 'package:multipass/core/crypto_bridge.dart';
 
 class CredentialRepository {
   final CryptoBridge _cryptoBridge;
-  
+
   // Mock "Master Credential" Data (simulating a stored mDL)
   // Indexes:
   // 0: Credential ID
@@ -28,10 +28,10 @@ class CredentialRepository {
 
   // Hardcoded Mock Signature (Would be checked against Mock Issuer PK)
   // In a real app, this comes from the Issuer during Issuance.
-  // We use placeholder bytes here since we can't generate a real sig 
+  // We use placeholder bytes here since we can't generate a real sig
   // without running the Rust 'sign' function with the Issuer SK.
-  final Uint8List _mockSignature = Uint8List(112); 
-  
+  final Uint8List _mockSignature = Uint8List(112);
+
   // Mock Issuer Public Key (Placeholder)
   final Uint8List _mockPublicKey = Uint8List(96);
 
@@ -46,7 +46,8 @@ class CredentialRepository {
     required String siteId,
   }) async {
     // 1. Prepare Messages (UTF-8 Bytes)
-    List<Uint8List> messages = _attributes.map((s) => Uint8List.fromList(utf8.encode(s))).toList();
+    List<Uint8List> messages =
+        _attributes.map((s) => Uint8List.fromList(utf8.encode(s))).toList();
 
     // 2. Prepare Nonce & SiteID
     Uint8List nonceBytes = Uint8List.fromList(utf8.encode(nonce));

@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -13,19 +13,23 @@ dependencies:
   # uniffi: ^0.1.0 (Using local generation)
   flutter_nfc_kit: ^3.4.0
   provider: ^6.0.0
-  google_fonts: ^6.1.0
+  google_fonts: ^7.0.2
   http: ^1.1.0
   ffi: ^2.1.0
-  flutter_secure_storage: ^9.0.0
-  local_auth: ^2.1.0
+  flutter_secure_storage: ^10.0.0
+  local_auth: ^3.0.0
   flutter_rust_bridge: 2.11.1
-  mobile_scanner: ^5.0.0
+  mobile_scanner: ^7.1.4
   qr_flutter: ^4.1.0
+  rust_lib_multipass:
+    path: rust_builder
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^6.0.0
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true

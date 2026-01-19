@@ -18,13 +18,13 @@ class _ImportScreenState extends State<ImportScreen> {
 
   Future<void> _importFromJson(String jsonString) async {
     setState(() => _isImporting = true);
-    
+
     try {
       final json = jsonDecode(jsonString);
       final credential = Credential.fromJson(json);
-      
+
       await _storage.save(credential);
-      
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -50,12 +50,13 @@ class _ImportScreenState extends State<ImportScreen> {
 
   void _showPasteDialog() {
     final controller = TextEditingController();
-    
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFF1A1A1A),
-        title: Text('Paste JSON', style: GoogleFonts.outfit(color: Colors.white)),
+        title:
+            Text('Paste JSON', style: GoogleFonts.outfit(color: Colors.white)),
         content: TextField(
           controller: controller,
           maxLines: 10,
@@ -76,7 +77,8 @@ class _ImportScreenState extends State<ImportScreen> {
               Navigator.pop(context);
               _importFromJson(controller.text);
             },
-            style: ElevatedButton.styleFrom(backgroundColor: AppTheme.electricBlue),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.electricBlue),
             child: const Text('Import', style: TextStyle(color: Colors.black)),
           ),
         ],
@@ -88,7 +90,8 @@ class _ImportScreenState extends State<ImportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Import Credential', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
+        title: Text('Import Credential',
+            style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
       ),
       body: Center(
@@ -98,7 +101,8 @@ class _ImportScreenState extends State<ImportScreen> {
                 children: [
                   const CircularProgressIndicator(color: AppTheme.electricBlue),
                   const SizedBox(height: 16),
-                  Text('Importing...', style: GoogleFonts.outfit(color: Colors.white54)),
+                  Text('Importing...',
+                      style: GoogleFonts.outfit(color: Colors.white54)),
                 ],
               )
             : Padding(
@@ -114,12 +118,13 @@ class _ImportScreenState extends State<ImportScreen> {
                       color: AppTheme.electricBlue,
                       onTap: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('QR Scanner not implemented yet')),
+                          const SnackBar(
+                              content: Text('QR Scanner not implemented yet')),
                         );
                       },
                     ),
                     const SizedBox(height: 24),
-                    
+
                     // JSON Paste Option
                     _buildOption(
                       icon: Icons.content_paste,
